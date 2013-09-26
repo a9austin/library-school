@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" ></script>
+<script>
+
+var names = null;
+var ids = null;
+
+function load_patrons(){
+	$.get('DisplayPatrons', display_patrons);
+}
+
+function display_patrons(request){
+	names = request.names;
+	ids = request.ids;
+	
+	var table_html = '<table><tr><td>Name</td><td>Library ID</td><td>Information</td></tr>';
+	for (var i = 0; i < ids.length; i++){
+		table_html += '<form action="Record">';
+		table_html += '<tr><td>'+names[i]+'</td><td>'+ids[i]+'</td>'
+		+ '<td><input type="submit" value="info"></td> </tr>';
+		table_html += '<input type="hidden" id="hidden_id" name="hidden_id" value="'+ ids[i] +'">'
+		table_html += '</form>';
+	}
+	table_html += '</table>';
+	document.getElementById('users_table').innerHTML = table_html;
+}
+
+
+</script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Patrons</title>
+</head>
+<body onload="load_patrons()">
+
+<span id="users_table"></span>
+
+<br>
+<a href="index.jsp">Home</a>
+<a href="browsing.html">Browsing</a>
+</body>
+</html>
